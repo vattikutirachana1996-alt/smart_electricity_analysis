@@ -1,0 +1,13 @@
+# Python 3.10 - 3.12 recommended.
+# streamlit is capped below 1.50 because the pages use `use_container_width=...`,
+# which newer Streamlit releases deprecate. Newer versions may need small edits.
+streamlit>=1.35,<1.50
+pandas>=2.1,<4
+numpy>=1.26
+plotly>=5.20,<7
+SQLAlchemy>=2.0,<3
+PyMySQL>=1.1
+cryptography>=42
+python-dotenv>=1.0
+openpyxl>=3.1
+pytest>=8.0

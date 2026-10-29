@@ -1,0 +1,24 @@
+SMART ELECTRICITY PROJECT — FIXED DATA IMPORT GUIDE
+
+1. Extract this ZIP into a new folder (do not delete your current project yet).
+2. Open the extracted folder in VS Code.
+3. Start Streamlit as you normally do.
+4. Open the Data Management page (page 6 in the sidebar).
+5. Upload the file named: cea_annual_import_ready_2024_25.csv
+   It is included in this project folder.
+6. In the mapping section, confirm these are selected automatically:
+   - State / UT -> state_or_system
+   - Month / date -> date
+   - Energy requirement (MU) -> energy_requirement_MU
+   - Energy availability (MU) -> energy_availability_MU
+   - Peak demand (MW) -> peak_demand_MW
+   - Peak demand met (MW) -> peak_met_MW
+7. The preview should show values in both peak columns, not blanks.
+8. In the import form, use your existing source name/URL or enter:
+   Dataset name: CEA Annual Power Supply Position 2024-25
+   Official source URL: https://cea.nic.in/annual-report/?lang=en
+   Check the official-source confirmation box.
+9. Select “Overwrite existing rows with this file”, then click “Import into MySQL”.
+10. Important: the data is annual 2024-25 state/system data stored with date 2024-04-01 for compatibility with the app. It is NOT monthly data and does not represent household meter consumption.
+
+If the app shows any state rows as unknown/excluded, do not assume all 36 rows imported. Check the Excluded rows tab and tell me the exact names shown.

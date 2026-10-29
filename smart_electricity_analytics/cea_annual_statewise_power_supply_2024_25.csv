@@ -1,0 +1,37 @@
+state,annual_energy_requirement_mu,annual_energy_supplied_mu,annual_energy_not_supplied_mu,peak_demand_mw,peak_met_mw,peak_demand_not_met_mw,financial_year,period_start,period_end,data_granularity,source,energy_gap_pct,peak_gap_pct
+Chandigarh,1952,1952,0,449,449,0,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0,0
+Delhi,38255,38243,12,8656,8656,0,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0.031,0
+Haryana,70149,70120,30,14662,14662,0,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0.043,0
+Himachal Pradesh,13566,13526,40,2273,2273,0,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0.295,0
+UT of J&K and Ladakh,20374,20283,90,3236,2836,400,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0.442,12.361
+Punjab,77423,77423,0,16058,16058,0,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0,0
+Rajasthan,113833,113529,304,19165,19165,0,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0.267,0
+Uttar Pradesh,165090,164786,304,30618,30618,0,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0.184,0
+Uttarakhand,16770,16727,43,2863,2863,0,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0.256,0
+Chhattisgarh,43208,43180,28,6511,6511,0,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0.065,0
+Gujarat,151878,151875,3,25588,25588,0,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0.002,0
+Madhya Pradesh,104445,104312,133,19371,19183,188,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0.127,0.971
+Maharashtra,201816,201757,59,30675,30675,0,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0.029,0
+Dadra & Nagar Haveli and Daman & Diu,10852,10852,0,1390,1390,0,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0,0
+Goa,5411,5411,0,810,810,0,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0,0
+Andhra Pradesh,79028,79025,3,13712,13712,0,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0.004,0
+Telangana,88262,88258,4,17162,17162,0,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0.005,0
+Karnataka,92450,92446,4,18398,18395,3,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0.004,0.016
+Kerala,31624,31616,8,5904,5631,274,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0.025,4.641
+Tamil Nadu,130413,130408,5,20784,20784,0,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0.004,0
+Puducherry,3549,3549,0,549,549,0,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0,0
+Lakshadweep,68,68,0,13,13,0,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0,0
+Bihar,44393,44217,176,8078,7852,226,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0.396,2.798
+DVC,25891,25888,3,3708,3704,4,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0.012,0.108
+Jharkhand,15203,15126,77,2295,2292,3,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0.506,0.131
+Odisha,42882,42858,24,6905,6905,0,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0.056,0
+West Bengal,71180,71085,95,12645,12640,5,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0.133,0.04
+Sikkim,574,574,0,138,138,0,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0,0
+Andaman & Nicobar,425,413,12,71,64,7,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",2.824,9.859
+Arunachal Pradesh,1050,1050,0,218,191,27,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0,12.385
+Assam,12843,12837,6,2812,2687,125,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0.047,4.445
+Manipur,1079,1068,10,269,269,0,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0.927,0
+Meghalaya,2046,2046,0,409,408,1,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0,0.244
+Mizoram,709,709,0,168,168,0,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0,0
+Nagaland,938,938,0,189,188,1,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0,0.529
+Tripura,1939,1939,0,386,386,0,2024-25,2024-04-01,2025-03-31,Annual total (not monthly),"CEA Annual Report 2024-25, Annexure 4A, Power Supply Position for 2024-25 (Revised), pp. 211-214",0,0
