@@ -22,8 +22,7 @@ def setup(title: str, icon: str = "⚡", subtitle: str = ""):
     st.title(f"{icon} {title}")
     if subtitle:
         st.caption(subtitle)
-    st.sidebar.caption("Source: Central Electricity Authority (CEA), Ministry of Power, Govt. of India - "
-                       "data as uploaded by the user.")
+    st.sidebar.caption("Source: user-imported dataset. See the data source and reporting period below.")
 
 
 @st.cache_data(ttl=30, show_spinner=False)
@@ -51,7 +50,7 @@ def get_data() -> pd.DataFrame:
                    f"'Create / verify schema'. ({type(e).__name__})")
         st.stop()
     if df.empty:
-        st.info("No data has been imported yet. Go to **Data Management** and upload an official CEA file.")
+        st.info("No data has been imported yet. Go to **Data Management** to import a dataset or the synthetic demo.")
         st.stop()
     return df
 
@@ -59,13 +58,16 @@ def get_data() -> pd.DataFrame:
 def source_panel():
     try:
         src = _sources()
-    except Exception:  # noqa: BLE001
+    except Exception as e:  # noqa: BLE001
+        st.warning(f"Could not load registered data sources ({type(e).__name__}).")
         return
-    if src.empty:
-        return
-    with st.expander("Data source and reporting period"):
-        s = src[["dataset_name", "source_url", "period_start", "period_end", "download_date", "energy_unit",
-                 "power_unit", "frequency", "limitations"]]
+    with st.expander("Data source and reporting period", expanded=True):
+        if src.empty:
+            st.info("No data sources have been registered yet. Import a dataset from Data Management.")
+            return
+        columns = ["dataset_name", "publisher", "source_url", "period_start", "period_end", "download_date",
+                   "energy_unit", "power_unit", "frequency", "limitations"]
+        s = src[[column for column in columns if column in src]]
         st.dataframe(s, hide_index=True, use_container_width=True)
 
 
@@ -78,11 +80,26 @@ def sidebar_filters(df: pd.DataFrame) -> pd.DataFrame:
     if sel_s:
         d = d[d["state"].isin(sel_s)]
     lo, hi = d["period"].min().date(), d["period"].max().date()
-    rng = st.sidebar.date_input("Date range", (lo, hi), min_value=lo, max_value=hi)
+    date_key = f"date_range_{lo.isoformat()}_{hi.isoformat()}"
+    if st.sidebar.button("Reset date range to all available data"):
+        if date_key in st.session_state:
+            del st.session_state[date_key]
+    rng = st.sidebar.date_input(
+        "Date range",
+        (lo, hi),
+        key=date_key,
+        help="Data is monthly: selecting any day includes that whole month. Only months present in the imported data are shown.",
+    )
     if isinstance(rng, (list, tuple)) and len(rng) == 2:
-        d = d[(d["period"] >= pd.Timestamp(rng[0])) & (d["period"] <= pd.Timestamp(rng[1]))]
+        months = d["period"].dt.to_period("M")
+        start_month, end_month = pd.Period(rng[0], freq="M"), pd.Period(rng[1], freq="M")
+        d = d[(months >= start_month) & (months <= end_month)]
     if d.empty:
-        st.warning("No rows match the current filters. Widen the selection in the sidebar.")
+        available = lo.strftime("%b %Y") if lo == hi else f"{lo:%b %Y} to {hi:%b %Y}"
+        st.info(
+            f"No records are available for the selected months. The current data selection covers "
+            f"{available}. Choose a range that includes those months, or import data for the selected period."
+        )
         st.stop()
     return d
 
@@ -90,6 +107,20 @@ def sidebar_filters(df: pd.DataFrame) -> pd.DataFrame:
 def available_metrics(df: pd.DataFrame, subset=None) -> dict:
     keys = subset or list(METRICS)
     return {k: METRICS[k] for k in keys if k in df and df[k].notna().any()}
+
+
+def high_usage_warning(flagged: pd.DataFrame):
+    """Show the latest detected high-usage anomaly from a flagged-records DataFrame."""
+    high = flagged[flagged["direction"] == "High"]
+    if high.empty:
+        return
+    latest = high.sort_values(["period", "state"]).iloc[-1]
+    st.warning(
+        f"High-usage anomaly detected in {len(high)} state-month record(s). Most recent: "
+        f"{latest['state']} in {latest['period']:%b %Y}, "
+        f"{latest['deviation_pct']:.1f}% above its expected baseline. "
+        "Review the highlighted graph point; this statistical signal is not a diagnosis."
+    )
 
 
 def fmt(v: float, unit: str = "") -> str:
@@ -100,8 +131,8 @@ def fmt(v: float, unit: str = "") -> str:
     return f"{s} {unit}".strip()
 
 
-def line(df, x, y, color=None, title="", ylabel=""):
-    fig = px.line(df, x=x, y=y, color=color, title=title, color_discrete_sequence=PALETTE, markers=False)
+def line(df, x, y, color=None, title="", ylabel="", markers=False):
+    fig = px.line(df, x=x, y=y, color=color, title=title, color_discrete_sequence=PALETTE, markers=markers)
     fig.update_layout(yaxis_title=ylabel, legend_title_text="", margin=dict(t=50, l=10, r=10, b=10), hovermode="x unified")
     return fig
 

@@ -51,6 +51,13 @@ def test_too_few_years_returns_empty_not_crash():
     assert scored.empty and flagged.empty
 
 
+def test_default_zscore_threshold_is_reachable_with_five_years():
+    _, _, info = detect_anomalies(make_series(years=5), M, "zscore", 1.5, min_group=5)
+
+    assert info["max_possible_z"] == pytest.approx(4 / 5**0.5)
+    assert 1.5 <= info["max_possible_z"]
+
+
 def test_bad_method():
     with pytest.raises(ValueError):
         detect_anomalies(make_series(), M, "magic")

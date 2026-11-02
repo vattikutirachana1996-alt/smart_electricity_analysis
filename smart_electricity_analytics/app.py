@@ -5,7 +5,7 @@ from src.config import AVAILABILITY_NOTE
 from src import ui
 
 ui.setup("Smart Electricity Consumption Analytics", "⚡",
-         "Indian electricity supply analysis using official CEA data, MySQL window-function SQL and statistical anomaly detection")
+         "Indian electricity supply analysis using official CEA data or clearly labeled synthetic demo data")
 
 ok, msg = db.test_connection()
 c1, c2 = st.columns([1, 2])
@@ -33,5 +33,5 @@ st.markdown("""
 st.subheader("Important data note")
 st.info(AVAILABILITY_NOTE + " CEA does not publish a state-wise metered consumption series in the same "
         "monthly reports, so this project analyses **electricity supply position** and labels it clearly.")
-st.caption("The application contains no built-in data. Everything shown comes from official CEA files that you upload.")
+st.caption("Import official CEA data or use the clearly labeled synthetic demo dataset to explore the charts.")
 ui.source_panel() if ok else None

@@ -107,10 +107,11 @@ def import_power_supply(df: pd.DataFrame, meta: dict, on_duplicate: str = "skip"
     eng = get_engine()
     with eng.begin() as c:
         c.execute(text("""INSERT INTO data_sources (dataset_name, source_url, period_start, period_end, download_date,
-                          energy_unit, power_unit, frequency, coverage, limitations, file_name)
+                          energy_unit, power_unit, frequency, coverage, limitations, file_name, publisher)
                           VALUES (:dataset_name, :source_url, :period_start, :period_end, :download_date,
-                          'MU', 'MW', :frequency, :coverage, :limitations, :file_name)"""),
-                  {**meta, "period_start": df["period"].min().date(), "period_end": df["period"].max().date()})
+                          'MU', 'MW', :frequency, :coverage, :limitations, :file_name, :publisher)"""),
+                  {**meta, "period_start": df["period"].min().date(), "period_end": df["period"].max().date(),
+                   "publisher": meta.get("publisher", "Central Electricity Authority (CEA), Ministry of Power, Govt. of India")})
         source_id = c.execute(text("SELECT LAST_INSERT_ID()")).scalar()
         for region in df["region"].dropna().unique():
             c.execute(text("INSERT IGNORE INTO regions (region_name) VALUES (:r)"), {"r": region})

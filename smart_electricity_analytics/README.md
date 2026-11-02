@@ -2,7 +2,12 @@
 
 Streamlit + MySQL dashboard for Indian state-wise electricity **supply position** data from the
 Central Electricity Authority (CEA). Python, Pandas, NumPy, Plotly, SQLAlchemy/PyMySQL, advanced
-MySQL 8 SQL, Z-score/IQR anomaly detection. **No machine learning. No bundled or fabricated data.**
+MySQL 8 SQL, Z-score/IQR anomaly detection. **No machine learning.**
+
+The project includes one explicitly labeled **synthetic demo CSV** at
+`data/demo/SYNTHETIC_demo_monthly_power_supply.csv` so you can test the charts.
+Its values are simulated, not official CEA statistics, and must not be used for
+research, reporting, or real-world conclusions. The app does not import it automatically.
 
 ## Read this first: what the data can and cannot support
 * CEA publishes **energy requirement / availability (MU)** and **peak demand / peak met (MW)** by state and month.
@@ -79,6 +84,13 @@ The app reads Streamlit secrets in the cloud and continues to use environment va
 5. Open the other pages. With no data they show an empty-state message, never placeholder numbers.
 
 Dates can be `2022-04-01`, `2022-04`, `Apr-2022`, or `01/04/2022` (day-first). Aggregate rows (All India, regions) are excluded and listed.
+
+### Try the charts with the synthetic demo data
+1. Open **Data Management** and acknowledge that the demo values are simulated.
+2. Click **Import demo data into MySQL** for a one-click import, or upload `data/demo/SYNTHETIC_demo_monthly_power_supply.csv` and choose **Synthetic demo data (not official)** in the regular import form.
+3. Open the dashboard pages and use the date range April 2019–March 2024. The sample is long enough to show monthly trends, growth, moving averages, complete fiscal-year comparisons, and anomaly detection.
+
+All values in this file are simulated examples; only use it to test the software.
 
 ### Troubleshooting
 | Symptom | Fix |

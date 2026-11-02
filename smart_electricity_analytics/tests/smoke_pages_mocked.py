@@ -136,6 +136,12 @@ def synthetic_upload():
     return b
 
 
+def synthetic_demo_upload():
+    path = ROOT / "data" / "demo" / "SYNTHETIC_demo_monthly_power_supply.csv"
+    b = io.BytesIO(path.read_bytes()); b.name = path.name
+    return b
+
+
 if __name__ == "__main__":
     failures = 0
     cases = [("app.py", {}), *[(f"pages/{p.name}", {}) for p in sorted((ROOT / "pages").glob("*.py"))]]
@@ -167,5 +173,52 @@ if __name__ == "__main__":
         failures += 0 if good else 1
     except Exception as e:  # noqa: BLE001
         failures += 1; print(f"[FAIL] import path: {type(e).__name__}: {e}")
+
+    # Synthetic demo uploads are identified from the file marker, without a dataset-type selector.
+    MESSAGES.clear(); st = install_fakes(synthetic_demo_upload()); db = patch_db(); calls = []
+    db.import_power_supply = lambda df, meta, mode: calls.append((df, meta, mode)) or {"source_id": 2, "new_rows": len(df), "duplicates_found": 0, "duplicates_action": mode}
+    Fake.form_submit_button = lambda self, *a, **k: True
+    Fake.checkbox = lambda self, *a, **k: True
+    try:
+        runpy.run_path(str(ROOT / "pages/6_Data_Management.py"), run_name="__main__")
+        df, meta, mode = calls[0]
+        good = (
+            len(df) == 600
+            and df["period"].min() == pd.Timestamp("2019-04-01")
+            and df["period"].max() == pd.Timestamp("2024-03-01")
+            and meta["publisher"] == "Synthetic demo data (not official)"
+            and meta["source_url"] == "Not applicable - synthetic demo data"
+            and mode == "skip"
+        )
+        print(f"[{'OK' if good else 'FAIL'}] demo import: {len(df)} rows, {meta['publisher']}, no official URL required")
+        failures += 0 if good else 1
+    except Exception as e:  # noqa: BLE001
+        failures += 1; print(f"[FAIL] demo import path: {type(e).__name__}: {e}")
+
+    # One-click demo import must prepare the same data without requiring file upload or official metadata.
+    MESSAGES.clear(); st = install_fakes(); db = patch_db(); calls = []
+    db.import_power_supply = lambda df, meta, mode: calls.append((df, meta, mode)) or {"source_id": 3, "new_rows": len(df), "duplicates_found": 0, "duplicates_action": mode}
+    Fake.button = lambda self, label, *a, **k: label == "Import demo data into MySQL"
+    Fake.checkbox = lambda self, *a, **k: True
+    try:
+        runpy.run_path(str(ROOT / "pages/6_Data_Management.py"), run_name="__main__")
+    except StopApp:
+        pass
+    except Exception as e:  # noqa: BLE001
+        failures += 1; print(f"[FAIL] one-click demo import: {type(e).__name__}: {e}")
+    try:
+        df, meta, mode = calls[0]
+        good = (
+            len(df) == 600
+            and df["period"].min() == pd.Timestamp("2019-04-01")
+            and df["period"].max() == pd.Timestamp("2024-03-01")
+            and meta["publisher"] == "Synthetic demo data (not official)"
+            and mode == "skip"
+        )
+        print(f"[{'OK' if good else 'FAIL'}] one-click demo import: {len(df)} rows with honest source metadata")
+        failures += 0 if good else 1
+    except (IndexError, ValueError) as e:
+        failures += 1; print(f"[FAIL] one-click demo import did not call database: {e}")
+
     print(f"\n{len(cases) - failures}/{len(cases)} page scripts ran without Python errors (mocked environment).")
     sys.exit(1 if failures else 0)

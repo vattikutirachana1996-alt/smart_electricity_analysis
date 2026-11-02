@@ -1,7 +1,6 @@
 import plotly.graph_objects as go
 import streamlit as st
 from src import ui, anomaly_detection as ad
-from src.config import METRICS
 
 ui.setup("Statistical Anomaly Detection", "🚨", "Z-score and IQR on scale- and trend-adjusted values (no machine learning)")
 raw = ui.get_data()
@@ -11,8 +10,19 @@ metric = st.selectbox("Metric", list(avail), format_func=avail.get)
 
 c1, c2, c3 = st.columns(3)
 method = c1.radio("Method", ["zscore", "iqr"], format_func=lambda m: "Z-score" if m == "zscore" else "IQR (Tukey fences)")
-default = 2.5 if method == "zscore" else 1.5
-threshold = c2.slider("Threshold" + (" (|z|)" if method == "zscore" else " (IQR multiplier k)"), 1.0, 4.0, default, 0.1)
+default = 1.5
+threshold = c2.slider(
+    "Threshold" + (" (|z|)" if method == "zscore" else " (IQR multiplier k)"),
+    1.0,
+    4.0,
+    default,
+    0.1,
+    help=(
+        "The default Z-score threshold is 1.5 so it can be reached with five years of data. "
+        "With five observations per month, the maximum possible |z| is about 1.79."
+        if method == "zscore" else None
+    ),
+)
 min_group = c3.slider("Min. years per state-month group", 4, 10, 5)
 
 with st.spinner("Computing anomalies..."):
@@ -56,13 +66,20 @@ states = sorted(scored["state"].unique())
 default_state = flagged["state"].iloc[0] if len(flagged) else states[0]
 s = st.selectbox("State", states, index=states.index(default_state))
 d = scored[scored["state"] == s]
+ui.high_usage_warning(d[d["is_anomaly"] & (d["direction"] == "High")])
 fig = go.Figure()
 fig.add_scatter(x=d["period"], y=d["observed"], name="Observed", mode="lines", line=dict(color=ui.PALETTE[0]))
 fig.add_scatter(x=d["period"], y=d["baseline"], name="Baseline (expected)", mode="lines", line=dict(color=ui.PALETTE[4], dash="dot"))
-f = d[d["is_anomaly"]]
-fig.add_scatter(x=f["period"], y=f["observed"], name="Flagged", mode="markers",
-                marker=dict(color=ui.PALETTE[3], size=11, symbol="diamond"),
-                customdata=f[["deviation_pct", "score"]], hovertemplate="%{x|%b %Y}<br>%{y:,.1f}<br>deviation %{customdata[0]:.1f}%<br>score %{customdata[1]:.2f}<extra></extra>")
+for direction, name, color, symbol in (
+    ("High", "High usage warning", ui.PALETTE[3], "triangle-up"),
+    ("Low", "Low anomaly", ui.PALETTE[2], "diamond"),
+):
+    f = d[d["is_anomaly"] & (d["direction"] == direction)]
+    fig.add_scatter(x=f["period"], y=f["observed"], name=name, mode="markers",
+                    marker=dict(color=color, size=11, symbol=symbol),
+                    customdata=f[["deviation_pct", "score"]],
+                    hovertemplate="%{x|%b %Y}<br>%{y:,.1f}<br>deviation %{customdata[0]:.1f}%<br>"
+                                  "score %{customdata[1]:.2f}<extra></extra>")
 fig.update_layout(title=f"{s}: {avail[metric]}", yaxis_title=avail[metric], hovermode="x unified")
 st.plotly_chart(fig, use_container_width=True)
 st.caption("Limitations: few years per group make estimates noisy; a data revision or a one-off event can look identical to a fault.")
